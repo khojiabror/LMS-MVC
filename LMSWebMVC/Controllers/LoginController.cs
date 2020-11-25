@@ -15,19 +15,11 @@ namespace LMSWebMVC.Controllers
         {
             return View("Login");
         }
-        public ActionResult Login(UserModel userModel)
+        public ActionResult Login()
         {
-            SecurityService securityService = new SecurityService();
-            Boolean success = securityService.Authenticate(userModel);
-
-            if (success)
-            {
-                return View("LoginSuccess",userModel);
-            }
-            else
-            {
-                return View("LoginFailure");
-            }
+           
+               return View();
+            
         }
     }
 }
