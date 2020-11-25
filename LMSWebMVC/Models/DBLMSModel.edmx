@@ -1,0 +1,859 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBLMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DEFECTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" />
+          <Property Name="Description" Type="varchar" MaxLength="40" />
+          <Property Name="ShopID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LOGS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Form" Type="varchar" MaxLength="50" />
+          <Property Name="Operation" Type="text" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="IP" Type="varchar" MaxLength="15" />
+          <Property Name="Line" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="PENALTIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShopID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBLMS.dbo.PERMISSIONROLES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PERMISSIONROLES">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="PermissionID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PERMISSIONS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermissionName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Model" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PRODUCTPLAN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Plan" Type="int" />
+          <Property Name="Actual" Type="int" />
+          <Property Name="OK" Type="int" />
+          <Property Name="NG" Type="int" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="Defect#1" Type="int" />
+          <Property Name="Defect#2" Type="int" />
+          <Property Name="Defect#3" Type="int" />
+          <Property Name="Defect#4" Type="int" />
+          <Property Name="Defect#5" Type="int" />
+          <Property Name="DownTime" Type="int" />
+          <Property Name="Comment" Type="text" />
+          <Property Name="ShiftID" Type="int" />
+        </EntityType>
+        <EntityType Name="PRODUCTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="text" />
+          <Property Name="CycleTime" Type="float" Nullable="false" />
+          <Property Name="ShopID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="text" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBLMS.dbo.ROLEUSERS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ROLEUSERS">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SHIFTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="StartHour" Type="int" Nullable="false" />
+          <Property Name="EndHour" Type="int" Nullable="false" />
+          <Property Name="BreakMinutes" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SHOPS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Description" Type="text" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBLMS.dbo.SHOPSHIFTS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SHOPSHIFTS">
+          <Key>
+            <PropertyRef Name="ShopID" />
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShopID" Type="int" Nullable="false" />
+          <Property Name="ShiftID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Question" Type="text" />
+          <Property Name="Answer" Type="varchar" MaxLength="20" />
+          <Property Name="IsOnline" Type="bit" />
+        </EntityType>
+        <EntityType Name="USERSIMAGES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Image" Type="image" />
+        </EntityType>
+        <EntityType Name="VERIFICATION">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IP" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Permission" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DEFECTS_SHOPS">
+          <End Role="SHOPS" Type="Self.SHOPS" Multiplicity="1" />
+          <End Role="DEFECTS" Type="Self.DEFECTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DEFECTS">
+              <PropertyRef Name="ShopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOGS_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="LOGS" Type="Self.LOGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LOGS">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PENALTIES_SHOPS">
+          <End Role="SHOPS" Type="Self.SHOPS" Multiplicity="1" />
+          <End Role="PENALTIES" Type="Self.PENALTIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PENALTIES">
+              <PropertyRef Name="ShopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERMISSIONROLES_PERMISSIONS">
+          <End Role="PERMISSIONS" Type="Self.PERMISSIONS" Multiplicity="1" />
+          <End Role="PERMISSIONROLES" Type="Self.PERMISSIONROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISSIONS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERMISSIONROLES">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERMISSIONROLES_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="PERMISSIONROLES" Type="Self.PERMISSIONROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERMISSIONROLES">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTPLAN_SHIFTS">
+          <End Role="SHIFTS" Type="Self.SHIFTS" Multiplicity="0..1" />
+          <End Role="PRODUCTPLAN" Type="Self.PRODUCTPLAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHIFTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTPLAN">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTS_SHOPS">
+          <End Role="SHOPS" Type="Self.SHOPS" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="ShopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLEUSERS_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="ROLEUSERS" Type="Self.ROLEUSERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ROLEUSERS">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLEUSERS_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="ROLEUSERS" Type="Self.ROLEUSERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ROLEUSERS">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SHOPSHIFTS_SHIFTS">
+          <End Role="SHIFTS" Type="Self.SHIFTS" Multiplicity="1" />
+          <End Role="SHOPSHIFTS" Type="Self.SHOPSHIFTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHIFTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SHOPSHIFTS">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SHOPSHIFTS_SHOPS">
+          <End Role="SHOPS" Type="Self.SHOPS" Multiplicity="1" />
+          <End Role="SHOPSHIFTS" Type="Self.SHOPSHIFTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SHOPSHIFTS">
+              <PropertyRef Name="ShopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERSIMAGES_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="USERSIMAGES" Type="Self.USERSIMAGES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="USERSIMAGES">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBLMSModelStoreContainer">
+          <EntitySet Name="DEFECTS" EntityType="Self.DEFECTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGS" EntityType="Self.LOGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PENALTIES" EntityType="Self.PENALTIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTPLAN" EntityType="Self.PRODUCTPLAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SHIFTS" EntityType="Self.SHIFTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SHOPS" EntityType="Self.SHOPS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERSIMAGES" EntityType="Self.USERSIMAGES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VERIFICATION" EntityType="Self.VERIFICATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERMISSIONROLES" EntityType="Self.PERMISSIONROLES" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PERMISSIONROLES].[PermissionID] AS [PermissionID], 
+    [PERMISSIONROLES].[RoleID] AS [RoleID]
+    FROM [dbo].[PERMISSIONROLES] AS [PERMISSIONROLES]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ROLEUSERS" EntityType="Self.ROLEUSERS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ROLEUSERS].[RoleID] AS [RoleID], 
+    [ROLEUSERS].[UserID] AS [UserID]
+    FROM [dbo].[ROLEUSERS] AS [ROLEUSERS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SHOPSHIFTS" EntityType="Self.SHOPSHIFTS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SHOPSHIFTS].[ShopID] AS [ShopID], 
+    [SHOPSHIFTS].[ShiftID] AS [ShiftID]
+    FROM [dbo].[SHOPSHIFTS] AS [SHOPSHIFTS]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_DEFECTS_SHOPS" Association="Self.FK_DEFECTS_SHOPS">
+            <End Role="SHOPS" EntitySet="SHOPS" />
+            <End Role="DEFECTS" EntitySet="DEFECTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOGS_USERS" Association="Self.FK_LOGS_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LOGS" EntitySet="LOGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PENALTIES_SHOPS" Association="Self.FK_PENALTIES_SHOPS">
+            <End Role="SHOPS" EntitySet="SHOPS" />
+            <End Role="PENALTIES" EntitySet="PENALTIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERMISSIONROLES_PERMISSIONS" Association="Self.FK_PERMISSIONROLES_PERMISSIONS">
+            <End Role="PERMISSIONS" EntitySet="PERMISSIONS" />
+            <End Role="PERMISSIONROLES" EntitySet="PERMISSIONROLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERMISSIONROLES_ROLES" Association="Self.FK_PERMISSIONROLES_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="PERMISSIONROLES" EntitySet="PERMISSIONROLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTPLAN_SHIFTS" Association="Self.FK_PRODUCTPLAN_SHIFTS">
+            <End Role="SHIFTS" EntitySet="SHIFTS" />
+            <End Role="PRODUCTPLAN" EntitySet="PRODUCTPLAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTS_SHOPS" Association="Self.FK_PRODUCTS_SHOPS">
+            <End Role="SHOPS" EntitySet="SHOPS" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLEUSERS_ROLES" Association="Self.FK_ROLEUSERS_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="ROLEUSERS" EntitySet="ROLEUSERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLEUSERS_USERS" Association="Self.FK_ROLEUSERS_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ROLEUSERS" EntitySet="ROLEUSERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SHOPSHIFTS_SHIFTS" Association="Self.FK_SHOPSHIFTS_SHIFTS">
+            <End Role="SHIFTS" EntitySet="SHIFTS" />
+            <End Role="SHOPSHIFTS" EntitySet="SHOPSHIFTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SHOPSHIFTS_SHOPS" Association="Self.FK_SHOPSHIFTS_SHOPS">
+            <End Role="SHOPS" EntitySet="SHOPS" />
+            <End Role="SHOPSHIFTS" EntitySet="SHOPSHIFTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERSIMAGES_USERS" Association="Self.FK_USERSIMAGES_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USERSIMAGES" EntitySet="USERSIMAGES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBLMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DEFECT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ShopID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SHOP" Relationship="Self.FK_DEFECTS_SHOPS" FromRole="DEFECTS" ToRole="SHOPS" />
+        </EntityType>
+        <EntityType Name="LOG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Form" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Operation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="IP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Line" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_LOGS_USERS" FromRole="LOGS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="PENALTy">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShopID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+          <NavigationProperty Name="SHOP" Relationship="Self.FK_PENALTIES_SHOPS" FromRole="PENALTIES" ToRole="SHOPS" />
+        </EntityType>
+        <EntityType Name="PERMISSION">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermissionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ROLES" Relationship="Self.PERMISSIONROLES" FromRole="PERMISSIONS" ToRole="ROLES" />
+        </EntityType>
+        <EntityType Name="PRODUCTPLAN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Plan" Type="Int32" />
+          <Property Name="Actual" Type="Int32" />
+          <Property Name="OK" Type="Int32" />
+          <Property Name="NG" Type="Int32" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="Defect_1" Type="Int32" />
+          <Property Name="Defect_2" Type="Int32" />
+          <Property Name="Defect_3" Type="Int32" />
+          <Property Name="Defect_4" Type="Int32" />
+          <Property Name="Defect_5" Type="Int32" />
+          <Property Name="DownTime" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ShiftID" Type="Int32" />
+          <NavigationProperty Name="SHIFT" Relationship="Self.FK_PRODUCTPLAN_SHIFTS" FromRole="PRODUCTPLAN" ToRole="SHIFTS" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CycleTime" Type="Double" Nullable="false" />
+          <Property Name="ShopID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SHOP" Relationship="Self.FK_PRODUCTS_SHOPS" FromRole="PRODUCTS" ToRole="SHOPS" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PERMISSIONS" Relationship="Self.PERMISSIONROLES" FromRole="ROLES" ToRole="PERMISSIONS" />
+          <NavigationProperty Name="USERS" Relationship="Self.ROLEUSERS" FromRole="ROLES" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="SHIFT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartHour" Type="Int32" Nullable="false" />
+          <Property Name="EndHour" Type="Int32" Nullable="false" />
+          <Property Name="BreakMinutes" Type="Double" Nullable="false" />
+          <NavigationProperty Name="PRODUCTPLANs" Relationship="Self.FK_PRODUCTPLAN_SHIFTS" FromRole="SHIFTS" ToRole="PRODUCTPLAN" />
+          <NavigationProperty Name="SHOPS" Relationship="Self.SHOPSHIFTS" FromRole="SHIFTS" ToRole="SHOPS" />
+        </EntityType>
+        <EntityType Name="SHOP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DEFECTS" Relationship="Self.FK_DEFECTS_SHOPS" FromRole="SHOPS" ToRole="DEFECTS" />
+          <NavigationProperty Name="PENALTIES" Relationship="Self.FK_PENALTIES_SHOPS" FromRole="SHOPS" ToRole="PENALTIES" />
+          <NavigationProperty Name="PRODUCTS" Relationship="Self.FK_PRODUCTS_SHOPS" FromRole="SHOPS" ToRole="PRODUCTS" />
+          <NavigationProperty Name="SHIFTS" Relationship="Self.SHOPSHIFTS" FromRole="SHOPS" ToRole="SHIFTS" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Answer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsOnline" Type="Boolean" />
+          <NavigationProperty Name="LOGS" Relationship="Self.FK_LOGS_USERS" FromRole="USERS" ToRole="LOGS" />
+          <NavigationProperty Name="USERSIMAGES" Relationship="Self.FK_USERSIMAGES_USERS" FromRole="USERS" ToRole="USERSIMAGES" />
+          <NavigationProperty Name="ROLES" Relationship="Self.ROLEUSERS" FromRole="USERS" ToRole="ROLES" />
+        </EntityType>
+        <EntityType Name="USERSIMAGE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_USERSIMAGES_USERS" FromRole="USERSIMAGES" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="VERIFICATION">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Permission" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DEFECTS_SHOPS">
+          <End Role="SHOPS" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="DEFECTS" Type="Self.DEFECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DEFECTS">
+              <PropertyRef Name="ShopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOGS_USERS">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="LOGS" Type="Self.LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LOGS">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PENALTIES_SHOPS">
+          <End Role="SHOPS" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="PENALTIES" Type="Self.PENALTy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PENALTIES">
+              <PropertyRef Name="ShopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTPLAN_SHIFTS">
+          <End Role="SHIFTS" Type="Self.SHIFT" Multiplicity="0..1" />
+          <End Role="PRODUCTPLAN" Type="Self.PRODUCTPLAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHIFTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTPLAN">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTS_SHOPS">
+          <End Role="SHOPS" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="ShopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERSIMAGES_USERS">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="USERSIMAGES" Type="Self.USERSIMAGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="USERSIMAGES">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PERMISSIONROLES">
+          <End Role="PERMISSIONS" Type="Self.PERMISSION" Multiplicity="*" />
+          <End Role="ROLES" Type="Self.ROLE" Multiplicity="*" />
+        </Association>
+        <Association Name="ROLEUSERS">
+          <End Role="ROLES" Type="Self.ROLE" Multiplicity="*" />
+          <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+        </Association>
+        <Association Name="SHOPSHIFTS">
+          <End Role="SHIFTS" Type="Self.SHIFT" Multiplicity="*" />
+          <End Role="SHOPS" Type="Self.SHOP" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DBLMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DEFECTS" EntityType="Self.DEFECT" />
+          <EntitySet Name="LOGS" EntityType="Self.LOG" />
+          <EntitySet Name="PENALTIES" EntityType="Self.PENALTy" />
+          <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSION" />
+          <EntitySet Name="PRODUCTPLANs" EntityType="Self.PRODUCTPLAN" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCT" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLE" />
+          <EntitySet Name="SHIFTS" EntityType="Self.SHIFT" />
+          <EntitySet Name="SHOPS" EntityType="Self.SHOP" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <EntitySet Name="USERSIMAGES" EntityType="Self.USERSIMAGE" />
+          <EntitySet Name="VERIFICATIONs" EntityType="Self.VERIFICATION" />
+          <AssociationSet Name="FK_DEFECTS_SHOPS" Association="Self.FK_DEFECTS_SHOPS">
+            <End Role="SHOPS" EntitySet="SHOPS" />
+            <End Role="DEFECTS" EntitySet="DEFECTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOGS_USERS" Association="Self.FK_LOGS_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LOGS" EntitySet="LOGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PENALTIES_SHOPS" Association="Self.FK_PENALTIES_SHOPS">
+            <End Role="SHOPS" EntitySet="SHOPS" />
+            <End Role="PENALTIES" EntitySet="PENALTIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTPLAN_SHIFTS" Association="Self.FK_PRODUCTPLAN_SHIFTS">
+            <End Role="SHIFTS" EntitySet="SHIFTS" />
+            <End Role="PRODUCTPLAN" EntitySet="PRODUCTPLANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTS_SHOPS" Association="Self.FK_PRODUCTS_SHOPS">
+            <End Role="SHOPS" EntitySet="SHOPS" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERSIMAGES_USERS" Association="Self.FK_USERSIMAGES_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USERSIMAGES" EntitySet="USERSIMAGES" />
+          </AssociationSet>
+          <AssociationSet Name="PERMISSIONROLES" Association="Self.PERMISSIONROLES">
+            <End Role="PERMISSIONS" EntitySet="PERMISSIONS" />
+            <End Role="ROLES" EntitySet="ROLES" />
+          </AssociationSet>
+          <AssociationSet Name="ROLEUSERS" Association="Self.ROLEUSERS">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+          <AssociationSet Name="SHOPSHIFTS" Association="Self.SHOPSHIFTS">
+            <End Role="SHIFTS" EntitySet="SHIFTS" />
+            <End Role="SHOPS" EntitySet="SHOPS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBLMSModelStoreContainer" CdmEntityContainer="DBLMSEntities">
+          <EntitySetMapping Name="DEFECTS">
+            <EntityTypeMapping TypeName="DBLMSModel.DEFECT">
+              <MappingFragment StoreEntitySet="DEFECTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGS">
+            <EntityTypeMapping TypeName="DBLMSModel.LOG">
+              <MappingFragment StoreEntitySet="LOGS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Form" ColumnName="Form" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PENALTIES">
+            <EntityTypeMapping TypeName="DBLMSModel.PENALTy">
+              <MappingFragment StoreEntitySet="PENALTIES">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERMISSIONS">
+            <EntityTypeMapping TypeName="DBLMSModel.PERMISSION">
+              <MappingFragment StoreEntitySet="PERMISSIONS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PermissionName" ColumnName="PermissionName" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTPLANs">
+            <EntityTypeMapping TypeName="DBLMSModel.PRODUCTPLAN">
+              <MappingFragment StoreEntitySet="PRODUCTPLAN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Plan" ColumnName="Plan" />
+                <ScalarProperty Name="Actual" ColumnName="Actual" />
+                <ScalarProperty Name="OK" ColumnName="OK" />
+                <ScalarProperty Name="NG" ColumnName="NG" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Defect_1" ColumnName="Defect#1" />
+                <ScalarProperty Name="Defect_2" ColumnName="Defect#2" />
+                <ScalarProperty Name="Defect_3" ColumnName="Defect#3" />
+                <ScalarProperty Name="Defect_4" ColumnName="Defect#4" />
+                <ScalarProperty Name="Defect_5" ColumnName="Defect#5" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTS">
+            <EntityTypeMapping TypeName="DBLMSModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CycleTime" ColumnName="CycleTime" />
+                <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLES">
+            <EntityTypeMapping TypeName="DBLMSModel.ROLE">
+              <MappingFragment StoreEntitySet="ROLES">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SHIFTS">
+            <EntityTypeMapping TypeName="DBLMSModel.SHIFT">
+              <MappingFragment StoreEntitySet="SHIFTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartHour" ColumnName="StartHour" />
+                <ScalarProperty Name="EndHour" ColumnName="EndHour" />
+                <ScalarProperty Name="BreakMinutes" ColumnName="BreakMinutes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SHOPS">
+            <EntityTypeMapping TypeName="DBLMSModel.SHOP">
+              <MappingFragment StoreEntitySet="SHOPS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="DBLMSModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERSIMAGES">
+            <EntityTypeMapping TypeName="DBLMSModel.USERSIMAGE">
+              <MappingFragment StoreEntitySet="USERSIMAGES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VERIFICATIONs">
+            <EntityTypeMapping TypeName="DBLMSModel.VERIFICATION">
+              <MappingFragment StoreEntitySet="VERIFICATION">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PERMISSIONROLES" TypeName="DBLMSModel.PERMISSIONROLES" StoreEntitySet="PERMISSIONROLES">
+            <EndProperty Name="PERMISSIONS">
+              <ScalarProperty Name="ID" ColumnName="PermissionID" />
+            </EndProperty>
+            <EndProperty Name="ROLES">
+              <ScalarProperty Name="ID" ColumnName="RoleID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ROLEUSERS" TypeName="DBLMSModel.ROLEUSERS" StoreEntitySet="ROLEUSERS">
+            <EndProperty Name="ROLES">
+              <ScalarProperty Name="ID" ColumnName="RoleID" />
+            </EndProperty>
+            <EndProperty Name="USERS">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="SHOPSHIFTS" TypeName="DBLMSModel.SHOPSHIFTS" StoreEntitySet="SHOPSHIFTS">
+            <EndProperty Name="SHIFTS">
+              <ScalarProperty Name="ID" ColumnName="ShiftID" />
+            </EndProperty>
+            <EndProperty Name="SHOPS">
+              <ScalarProperty Name="ID" ColumnName="ShopID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
